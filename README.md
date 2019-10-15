@@ -54,4 +54,3 @@ python mqtt_subscriber.py
 
 * Hat tip to anyone whose code was used
 * Inspiration
-* etc

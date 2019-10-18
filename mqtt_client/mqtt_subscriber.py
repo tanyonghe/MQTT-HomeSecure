@@ -2,7 +2,7 @@ import datetime
 import paho.mqtt.client as mqtt
 
  
-MQTT_SERVER = "192.168.1.28"
+MQTT_SERVER = "192.168.43.223"
 MQTT_PATH = "cs3103_group2_channel"
 
 
@@ -17,13 +17,26 @@ def write_pir_data():
 	
 	# Write in new data and append previous data
 	f = open("pir_data.txt", "w+")
-	f.write("Motion detected on %s\r\n" % (datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),))
+	f.write("Motion detected on %s \r\n" % (datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),))
 	f.write(data)
 	f.close()
+	
+def write_dht11_data(payload):
+	# Update humidity and temperature data if available
+	try:
+		parameters = payload.split(" ")
+		humidity = parameters[1]
+		temperature = parameters[2]
+		data = "%s %s" % (humidity, temperature)
+		f = open("dht11_data.txt", "w+")
+		f.write(data)
+		f.close()
+	except:
+		return
  
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-	print("Connected with result code "+str(rc))
+	print("Connected with result code", str(rc))
  
 	# Subscribing in on_connect() means that if we lose the connection and
 	# reconnect then subscriptions will be renewed.
@@ -31,12 +44,12 @@ def on_connect(client, userdata, flags, rc):
  
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-	print(msg.topic+" "+str(msg.payload))
-	datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S")
-	f = open("pir_data.txt", "a+")
-	f.write("Motion detected on %s\r\n" % (datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),))
-	f.close()
-	# more callbacks, etc
+	print(msg.topic, str(msg.payload))
+	payload = msg.payload.decode("utf-8")
+	if payload.startswith("PIR"):
+		write_pir_data()
+	else:
+		write_dht11_data(payload)
  
 client = mqtt.Client()
 client.on_connect = on_connect

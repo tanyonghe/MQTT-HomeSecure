@@ -1,3 +1,4 @@
+import Adafruit_DHT
 import RPi.GPIO as GPIO
 import paho.mqtt.publish as publish
 import time
@@ -5,11 +6,15 @@ import time
 
 MQTT_SERVER = "localhost"
 MQTT_PATH = "cs3103_group2_channel"
+DHT_SENSOR = Adafruit_DHT.DHT11
+DHT_PIN = 4
 
 
 def publish_pir_data():
-	publish.single(MQTT_PATH, "Motion detected on PIR motion sensor!", hostname=MQTT_SERVER)
+	publish.single(MQTT_PATH, "PIR Sensor: Motion Detected!", hostname=MQTT_SERVER)
 
+def publish_dht11_data(humidity, temperature):
+	publish.single(MQTT_PATH, "DHT11 {0:0.1f}% {1:0.1f}C".format(humidity, temperature), hostname=MQTT_SERVER)
 
 if __name__ == "__main__":
 	GPIO.setwarnings(False)
@@ -26,3 +31,10 @@ if __name__ == "__main__":
 			publish_pir_data()		#Publish data to subscribers
 			#GPIO.output(3, 1)  	#Turn ON LED
 			time.sleep(1)
+			
+		humidity, temperature = Adafruit_DHT.read(DHT_SENSOR, DHT_PIN)
+		if humidity is not None and temperature is not None:
+			publish_dht11_data(humidity, temperature)
+			print("Humidity={0:0.1f}% Temp={1:0.1f}C".format(humidity, temperature))
+		else:
+			print("Sensor failure. Check wiring.")

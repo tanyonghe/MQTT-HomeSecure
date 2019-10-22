@@ -2,55 +2,35 @@
 
 To set up a home surveillance system using motion sensors that can send data messages to homeowners.
 
-## Getting Started
+## Setup
+###DHT11 Temperature & Humidity Sensor
+GCC - GPIO Pin 2
+Data - GPIO Pin 7
+GND - GPIO Pin 9
+###HC-SR501 PIR Sensor
+GCC - GPIO Pin 1
+Data - GPIO Pin 11
+GND - GPIO Pin 6
 
-These instructions will get you a copy of the project up and running on your local machine for demonstration/deployment purposes.
 
-### Prerequisites
+## Timeline
+Week 10 - Work on delegated tasks
+Week 11 - Prep for lab demo
+Week 12 - Implement everything else together
+Week 13 - Prep for lab demo + fluff*
 
-Hardware Used
+## Work in Progress
+1. Design a nice UI for displaying data from our sensors + store messages in json
+2. TLS connection using certificates (security)
+3. Raspberry Pi Sensor
+4. Persistent connection by queueing unsent data messages (in case of service disruptions)
+5. Fluff
 
-1. Raspberry Pi
-2. Micro SD Card with Raspberry Pi OS image installed
-2. F/F Jumper Wires
-3. HC-SR501 Infrared PIR Motion Sensor Module
-4. DHT11 Temperature & Humidity Sensor Module
-
-Software Used
- 
-1. Python 3.7.0
-2. Python Libraries
-* [RPi.GPIO](https://pypi.org/project/RPi.GPIO/) - GPIO Control on a Raspberry Pi
-```
-pip install RPi.GPIO
-```
-* [Eclipse Paho MQTT Python Client Library](https://pypi.org/project/paho-mqtt/) - Client Class for MQTT Protocol
-```
-pip install paho-mqtt
-```
-
-### Running the Program
-
-1. Start collecting data and publishing messages on the MQTT Broker (i.e. the Raspberry Pi) using the following command in the mqtt_broker directory:
-
-```
-python pir_sensor.py
-```
-
-2. Subscribe to MQTT Broker (i.e. the Raspberry Pi) on Client Machine (e.g. desktop, laptop, etc.) using the following command in the mqtt_client directory:
-
-```
-python mqtt_subscriber.py
-```
-
-3. Data will be saved locally and displayed on the HTML page found in the mqtt_client directory.
-
-## WIP
-1. Decorate HTML page.
-2. Encrypt messages in MQTT protocol.
-3. Add other sensors too.
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
+## Fluff
+1.  Well defined primary purpose of IoT project (10%)
+2. Ideas for possible future extensions (20%)
+3. Specific Algorithms/Methods/Techniques used (e.g. Where and how the data is processed? Any communication protocols used?) (30%)
+Communication protocols may include:
+- the structure of your data packet
+- how often it is sent
+- duty cycle

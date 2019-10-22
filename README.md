@@ -5,14 +5,13 @@ To set up a home surveillance system using motion sensors that can send data mes
 
 ## Setup
 ### DHT11 Temperature & Humidity Sensor
-GCC - GPIO Pin 2
-Data - GPIO Pin 7
-GND - GPIO Pin 9
+GCC - GPIO Pin 2  
+Data - GPIO Pin 7  
+GND - GPIO Pin 9  
 ### HC-SR501 PIR Sensor
-GCC - GPIO Pin 1
-Data - GPIO Pin 11
-GND - GPIO Pin 6
-
+GCC - GPIO Pin 1  
+Data - GPIO Pin 11  
+GND - GPIO Pin 6  
 
 ## Timeline
 Week 10 - Work on delegated tasks

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import AAAA from './public/data.txt';
 
 class Hello extends React.Component {
 
@@ -12,6 +13,7 @@ class Hello extends React.Component {
        <div>
 
           <h1>Hello World!</h1>
+          <div>{ AAAA }</div>
 
        </div>
 

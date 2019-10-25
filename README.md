@@ -3,10 +3,10 @@
 To set up a home surveillance system using motion sensors that can send data messages to homeowners.
 
 ## Project Timeline
-Week 10 - Work on delegated tasks
-Week 11 - Prep for lab demo
-Week 12 - Implement everything else together
-Week 13 - Prep for final lab demo
+Week 10 - Work on delegated tasks  
+Week 11 - Prep for lab demo  
+Week 12 - Implement everything else together  
+Week 13 - Prep for final lab demo  
 
 ## Our Setup
 
@@ -20,15 +20,15 @@ Week 13 - Prep for final lab demo
 
 ### Software Used
  
-1. Python 3.7.0
-2. Python Libraries
-* [RPi.GPIO](https://pypi.org/project/RPi.GPIO/) - GPIO Control on a Raspberry Pi
+1. Python 3.7.0  
+2. Python Libraries  
+* [RPi.GPIO](https://pypi.org/project/RPi.GPIO/) - GPIO Control on a Raspberry Pi  
+* [Eclipse Paho MQTT Python Client Library](https://pypi.org/project/paho-mqtt/) - Client Class for MQTT Protocol  
+* [picamera](https://pypi.org/project/picamera/) - Raspberry Pi Camera Module  
+
+Install prerequisite libraries with pip:  
 ```
-pip install RPi.GPIO
-```
-* [Eclipse Paho MQTT Python Client Library](https://pypi.org/project/paho-mqtt/) - Client Class for MQTT Protocol
-```
-pip install paho-mqtt
+pip install -r requirements.txt  
 ```
 
 ### RPi GPIO Setup

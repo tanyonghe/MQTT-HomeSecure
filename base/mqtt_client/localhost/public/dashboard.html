@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>IoT Home Surveillance Dashboard</title>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="./dashboard/styles.css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="./dashboard/script.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>IoT Home Surveillance Dashboard</h2>
+        <hr>
+        <p>Welcome! Check out our GitHub repository <a href="https://github.com/tanyonghe/cs3103-project">here</a>!</p>
+        <div class="row">
+            <div class="panel panel-primary filterable">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Home Surveillance Data</h3>
+                    <div class="pull-right">
+                        <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filter</button>
+                    </div>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr class="filters">
+                            <th><input type="text" class="form-control" placeholder="ID No." disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Event" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Datetime" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Location" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Image" disabled></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableData"
+        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var fileName = "./data/sample_data_logs.txt";
+        var txtFile;
+        
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        if (window.XMLHttpRequest) {
+            txtFile = new XMLHttpRequest();
+        }
+        // code for IE6, IE5
+        else {
+            txtFile = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+          
+        txtFile.open("GET",fileName,false);
+        txtFile.send();
+        
+        var txtDoc=txtFile.responseText;
+        var lines = txtDoc.split("\r\n");
+        var tableData = '';
+
+        lines.forEach(function(line) {
+        var lineData = line.split("_");
+            tableData += '<tr>';
+            tableData += '<td>'+ lineData[0] + '</td>';
+            tableData += '<td>'+ lineData[1] + '</td>';
+            tableData += '<td>'+ lineData[2] + '</td>';
+            tableData += '<td>'+ lineData[3] + '</td>';
+            tableData += '<td>'+ '<a href="' + lineData[4] + '"> Image </a>' + '</td>';
+            tableData += '</tr>';
+        }); 
+
+        document.getElementById('tableData').innerHTML = tableData;
+    </script>
+
+
+</body>
+</html>

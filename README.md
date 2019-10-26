@@ -26,7 +26,7 @@ Week 13 - Prep for final lab demo
 * [Eclipse Paho MQTT Python Client Library](https://pypi.org/project/paho-mqtt/) - Client Class for MQTT Protocol  
 * [picamera](https://pypi.org/project/picamera/) - Raspberry Pi Camera Module  
 
-Install prerequisite libraries with pip:  
+Install prerequisite Python libraries with pip:  
 ```
 pip install -r requirements.txt  
 ```

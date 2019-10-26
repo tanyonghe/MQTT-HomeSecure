@@ -6,7 +6,7 @@ from time import sleep
 
 def convertImageToBase64(image_filename):
     with open(image_filename, 'b') as image_file:
-    encoded = base64.b64encode(image_file.read())
+        encoded = base64.b64encode(image_file.read())
     return encoded
 
 def take_snapshot():

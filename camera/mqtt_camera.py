@@ -25,11 +25,6 @@ def takeSnapshot():
 	except:
 		print("Failed to take snapshot photo")
 
-def takeSnapshotBase64():
-	image_filename = takeSnapshot()
-	encoded = convertImageToBase64(image_filename)
-	return encoded
-
 if __name__ == '__main__':
     image_filename = takeSnapshot()
     print('Took a snapshot photo', image_filename)

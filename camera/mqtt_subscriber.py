@@ -1,4 +1,5 @@
 import datetime
+import json
 import paho.mqtt.client as mqtt
 
  
@@ -7,32 +8,39 @@ MQTT_PATH = "cs3103_group2_channel"	# Channel Name
 
 
 def write_pir_data():
+	write_data = "%s|||%s|||%s|||%s|||%s" % (data["index"], "Motion Detected", data["datetime"], data["location"], data["image_filename"])
+	
 	# Read existing data
 	try:
-		f = open("pir_data.txt", "r")
-		data = f.read()
+		f = open("data.txt", "r")
+		old_data = f.read()
 		f.close()
 	except:
-		data = ""
+		old_data = ""
 	
 	# Write in new data and append previous data
-	f = open("pir_data.txt", "w+")
-	f.write("Motion detected on %s \r\n" % (datetime.datetime.today().strftime("%Y-%m-%d %H:%M:%S"),))
-	f.write(data)
+	f = open("data.txt", "w+")
+	f.write(write_data)
+	f.write(old_data)
 	f.close()
 	
-def write_temp_data(payload):
-	# Update humidity and temperature data if available
+def write_dht11_data(data):
+	write_data = "%s|||%s|||%s|||%s|||%s" % (data["index"], "Abnormal Temperature Detected: %s" % (data["temperature",), 
+			data["datetime"], data["location"], data["image_filename"])
+	
+	# Read existing data
 	try:
-		parameters = payload.split(" ")
-		humidity = parameters[1]
-		temperature = parameters[2]
-		data = "%s %s" % (humidity, temperature)
-		f = open("dht11_data.txt", "w+")
-		f.write(data)
+		f = open("data.txt", "r")
+		old_data = f.read()
 		f.close()
 	except:
-		return
+		old_data = ""
+	
+	# Write in new data and append previous data
+	f = open("data.txt", "w+")
+	f.write(write_data)
+	f.write(old_data)
+	f.close()
  
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -46,10 +54,12 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 	print(msg.topic, str(msg.payload))
 	payload = msg.payload.decode("utf-8")
-	if payload.startswith("PIR"):
-		write_pir_data()
+	data = json.loads(payload)
+	if data["topic"] == "pir":
+		write_pir_data(data)
 	else:
-		write_temp_data(payload)
+		pass
+		write_dht11_data(data)
  
 client = mqtt.Client()
 client.on_connect = on_connect

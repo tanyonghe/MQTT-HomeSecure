@@ -1,31 +1,39 @@
+import base64
 import datetime
 import json
 import paho.mqtt.client as mqtt
 
  
-MQTT_SERVER = "192.168.43.223"		# MQTT Broker IP Address
+MQTT_SERVER = "192.168.1.28" #"192.168.43.223"		# MQTT Broker IP Address
 MQTT_PATH = "cs3103_group2_channel"	# Channel Name
 
 
-def write_pir_data():
+def write_pir_data(data):
 	write_data = "%s|||%s|||%s|||%s|||%s" % (data["index"], "Motion Detected", data["datetime"], data["location"], data["image_filename"])
+	#base64.b64encode(image_file.read()).decode("utf-8")
+	
+	with open(data["image_filename"], "wb") as f:
+		f.write(base64.b64decode(data["image_base64"].encode("utf-8")))
 	
 	# Read existing data
 	try:
+		print('a')
 		f = open("data.txt", "r")
 		old_data = f.read()
 		f.close()
 	except:
+		print('b')
 		old_data = ""
-	
+	print("A")
 	# Write in new data and append previous data
 	f = open("data.txt", "w+")
 	f.write(write_data)
 	f.write(old_data)
 	f.close()
+	print("B")
 	
 def write_dht11_data(data):
-	write_data = "%s|||%s|||%s|||%s|||%s" % (data["index"], "Abnormal Temperature Detected: %s" % (data["temperature",), 
+	write_data = "%s|||%s|||%s|||%s|||%s" % (data["index"], "Abnormal Temperature Detected: %s" % (data["temperature"],), 
 			data["datetime"], data["location"], data["image_filename"])
 	
 	# Read existing data
@@ -52,10 +60,11 @@ def on_connect(client, userdata, flags, rc):
  
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-	print(msg.topic, str(msg.payload))
-	payload = msg.payload.decode("utf-8")
+	#print(msg.topic, str(msg.payload))
+	payload = msg.payload.decode("ascii")
 	data = json.loads(payload)
 	if data["topic"] == "pir":
+		print("YES")
 		write_pir_data(data)
 	else:
 		pass
@@ -64,7 +73,6 @@ def on_message(client, userdata, msg):
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
- 
 client.connect(MQTT_SERVER, 1883, 60)
  
 # Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.

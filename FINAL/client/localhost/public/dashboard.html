@@ -45,7 +45,7 @@
     </div>
 
     <script>
-        var fileName = "./data/sample_data_logs.txt";
+        var fileName = "./data/data_logs.txt";
         var txtFile;
         
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -65,14 +65,16 @@
         var tableData = '';
 
         lines.forEach(function(line) {
-        var lineData = line.split("|||");
-            tableData += '<tr>';
-            tableData += '<td>'+ lineData[0] + '</td>';
-            tableData += '<td>'+ lineData[1] + '</td>';
-            tableData += '<td>'+ lineData[2] + '</td>';
-            tableData += '<td>'+ lineData[3] + '</td>';
-            tableData += '<td>'+ '<a href="' + lineData[4] + '"> Image </a>' + '</td>';
-            tableData += '</tr>';
+			if (line !== "") {
+				var lineData = line.split("|||");
+				tableData += '<tr>';
+				tableData += '<td>'+ lineData[0] + '</td>';
+				tableData += '<td>'+ lineData[1] + '</td>';
+				tableData += '<td>'+ lineData[2] + '</td>';
+				tableData += '<td>'+ lineData[3] + '</td>';
+				tableData += '<td>'+ '<a href="' + './data/' + lineData[4] + '"> Image </a>' + '</td>';
+				tableData += '</tr>';
+			}
         }); 
 
         document.getElementById('tableData').innerHTML = tableData;

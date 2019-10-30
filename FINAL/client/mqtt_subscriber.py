@@ -9,7 +9,7 @@ MQTT_SERVER = "192.168.1.28"		# MQTT Broker IP Address
 #MQTT_SERVER = "192.168.43.223"		# MQTT Broker IP Address
 MQTT_PATH = "cs3103_group2_channel"	# Channel Name
 DATA_FILEPATH = "./localhost/public/data/"
-DATA_FILENAME = "data.txt"
+DATA_FILENAME = "data_logs.txt"
 DATA_FULLPATH = os.path.join(DATA_FILEPATH, DATA_FILENAME)
 DEBUG = True
 

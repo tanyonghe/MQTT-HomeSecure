@@ -8,6 +8,7 @@ import paho.mqtt.client as mqtt
 MQTT_SERVER = "192.168.1.28"		# MQTT Broker IP Address
 #MQTT_SERVER = "192.168.43.223"		# MQTT Broker IP Address
 MQTT_PATH = "cs3103_group2_channel"	# Channel Name
+TLS_CERT_FILEPATH = "./ca.crt"		# TLS Certificate
 DATA_FILEPATH = "./localhost/public/data/"
 DATA_FILENAME = "data_logs.txt"
 DATA_FULLPATH = os.path.join(DATA_FILEPATH, DATA_FILENAME)
@@ -101,7 +102,13 @@ if __name__ == "__main__":
 	client = mqtt.Client()
 	client.on_connect = on_connect
 	client.on_message = on_message
-	client.connect(MQTT_SERVER, 1883, 60)
+	
+	if TLS_CERT_FILEPATH:
+		client.tls_set(TLS_CERT_FILEPATH)
+		client.tls_insecure_set(True)
+		client.connect(MQTT_SERVER, 8883)
+	else:
+		client.connect(MQTT_SERVER, 1883, 60)
 	 
 	# Blocking call that processes network traffic, dispatches callbacks and handles reconnecting.
 	# Other loop*() functions are available that give a threaded interface and a manual interface.

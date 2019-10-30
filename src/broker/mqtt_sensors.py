@@ -53,7 +53,7 @@ if __name__ == "__main__":
 	# Initial Setup
 	GPIO.setwarnings(False)
 	GPIO.setmode(GPIO.BOARD)
-	index = 0
+	index = 1
 	
 	# Read output from HC-SR501 Infrared PIR Motion Sensor Module
 	GPIO.setup(11, GPIO.IN)

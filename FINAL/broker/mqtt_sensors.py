@@ -34,15 +34,15 @@ def takeSnapshot(camera):
 		print("Failed to capture image on camera.")
 
 
-def publish_pir_data(image_filename, image_base64):
-	data = {"topic": "pir", "index": 1, "location": "Living Room", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H-%M-%S'), 
+def publish_pir_data(index, image_filename, image_base64):
+	data = {"topic": "pir", "index": index, "location": "Living Room", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S'), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
 	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER)
 
 
-def publish_dht11_data(humidity, temperature, image_filename, image_base64):
-	data = {"topic": "dht11", "index": 1, "location": "Kitchen", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H-%M-%S'), 
+def publish_dht11_data(index, humidity, temperature, image_filename, image_base64):
+	data = {"topic": "dht11", "index": index, "location": "Kitchen", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S'), 
 		"humidity": "{0:0.1f}%".format(humidity), "temperature": "{1:0.1f}C".format(temperature), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
@@ -53,6 +53,7 @@ if __name__ == "__main__":
 	# Initial Setup
 	GPIO.setwarnings(False)
 	GPIO.setmode(GPIO.BOARD)
+	index = 0
 	
 	# Read output from HC-SR501 Infrared PIR Motion Sensor Module
 	GPIO.setup(11, GPIO.IN)
@@ -70,7 +71,8 @@ if __name__ == "__main__":
 			# Alerts MQTT client when motion is detected (e.g. intruders in the house)
 			image_filename = takeSnapshot(camera)
 			image_base64 = convertImageToBase64(image_filename)		
-			publish_pir_data(image_filename, image_base64)
+			publish_pir_data(index, image_filename, image_base64)
+			index += 1
 			time.sleep(2)
 			
 			if DEBUG:
@@ -85,7 +87,8 @@ if __name__ == "__main__":
 			if temperature > 40.0:
 				image_filename = takeSnapshot(camera)
 				image_base64 = convertImageToBase64(image_filename)	
-				publish_dht11_data(humidity, temperature, image_filename, image_base64)
+				publish_dht11_data(index, humidity, temperature, image_filename, image_base64)
+				index += 1
 				
 			if DEBUG:
 				print("Humidity={0:0.1f}% Temp={1:0.1f}C".format(humidity, temperature))

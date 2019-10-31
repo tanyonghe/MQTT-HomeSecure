@@ -66,6 +66,7 @@ python mqtt_subscriber.py
 Use the following command to set up the page on `http://localhost:3000`.
 
 ```
+npm install
 node index
 ```
 
@@ -77,20 +78,15 @@ node index
 4. Client can view webpage for logged data when there is detected motion or abnormal temperature in the house.
 5. Client can further verify if logged data were false alarms or not by checking the images captured in (3).
 
+## Implemented Features
 
-## CS3103 Project
-
-### Work in Progress
-1. TLS connection using certificates (security)
-2. Persistent connection by queueing unsent data messages (in case of service disruptions)
-3. Fluff
-
-### Fluff
-1.  Well defined primary purpose of IoT project (10%)
-2. Ideas for possible future extensions (20%)
-3. Specific Algorithms/Methods/Techniques used (30%)
-- Where and how the data is processed
-- Communication protocols used (e.g. structure of data packet, how often it is sent, duty cycle)
+1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity) -YH
+2. Format JSON objects from collected data -YH
+3. MQTT protocol from MQTT broker and data sensors to MQTT client -YH
+4. Storage of data logs and captured images from data sensors -YH
+5. UI for displaying logged data on localhost website -YH
+6. Enabled TLS connection -YH
+7. Enhanced messaging reliability and persistence with MQTT protocol -not done
 
 ## Authors
 

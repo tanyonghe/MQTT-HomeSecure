@@ -38,7 +38,7 @@ def publish_pir_data(index, image_filename, image_base64):
 	data = {"topic": "pir", "index": index, "location": "Living Room", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S'), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
-	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER)
+	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
 
 
 def publish_dht11_data(index, humidity, temperature, image_filename, image_base64):
@@ -46,7 +46,7 @@ def publish_dht11_data(index, humidity, temperature, image_filename, image_base6
 		"humidity": "{0:0.1f}%".format(humidity), "temperature": "{1:0.1f}C".format(temperature), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
-	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER)
+	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
 		
 
 if __name__ == "__main__":

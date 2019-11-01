@@ -1,6 +1,8 @@
-# Home Surveillance via Data Sensors using MQTT Protocol
+# MQTT HomeSecure
 
-To set up a home surveillance system using sensors that can send data messages to alert homeowners of suspicious activities like unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sends them an image so that they can monitor the situation remotely.
+## Home Surveillance via Data Sensors using MQTT Protocol
+
+The aim of this project was to set up a home surveillance system using sensors that can send data messages to alert homeowners of suspicious activities like unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sends them an image so that they can monitor the situation remotely.
 
 ## Our Setup
 
@@ -76,8 +78,11 @@ npm install
 node index
 ```
 
+The credentials for logging in to the dashboard are:
+```
 Username: admin  
 Password: cs3103rocks  
+```
 
 ## Logic Model
 

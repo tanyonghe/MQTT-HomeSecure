@@ -38,37 +38,46 @@ GCC - GPIO Pin 4
 Data - GPIO Pin 11  
 GND - GPIO Pin 6  
 
-## Running the Program
+## Setting Up and Running the Program
 
-1. Set up Mosquitto MQTT Broker
+1. Install Mosquitto MQTT Broker
 
 ```
 sudo apt update
 sudo apt install -y mosquitto mosquitto-clients
-sudo systemctl enable mosquitto.service
 ```
 
-2. Start collecting data on the MQTT Broker (i.e. the Raspberry Pi) and publishing messages to your MQTT Client Machine (e.g. desktop, laptop, etc.) by using the following command in the `src/broker` directory:
+2. Set up Mosquitto MQTT Broker using default configurations.
+
+```
+sudo systemctl enable mosquitto.service
+mosquitto -v
+```
+
+3. Start collecting data on the MQTT Broker (i.e. the Raspberry Pi) and publishing messages to your MQTT Client Machine (e.g. desktop, laptop, etc.) by using the following command in the `src/broker` directory:
 
 ```
 python mqtt_sensors.py
 ```
 
-3. Subscribe to MQTT Broker (i.e. the Raspberry Pi) on your MQTT Client Machine (e.g. desktop, laptop, etc.) using the following command in the `src/client` directory:
+4. Subscribe to MQTT Broker (i.e. the Raspberry Pi) on your MQTT Client Machine (e.g. desktop, laptop, etc.) using the following command in the `src/client` directory:
 
 ```
 python mqtt_subscriber.py
 ```
 
-4. Data (i.e. data logs and images) will be saved locally in the `src/client/localhost/public/data` directory.
+5. Data (i.e. data logs and images) will be saved locally in the `src/client/localhost/public/data` directory.
 
-5. Alternatively, users may view the data on a deployed Node.js page found in the `src/client/localhost` directory.  
-Use the following command to set up the page on `http://localhost:3000`.
+6. Alternatively, users may view the data on a deployed Node.js page found in the `src/client/localhost` directory.  
+Use the following commands to set up the page on `http://localhost:3000`.  
 
 ```
 npm install
 node index
 ```
+
+Username: admin  
+Password: cs3103rocks  
 
 ## Logic Model
 
@@ -78,15 +87,27 @@ node index
 4. Client can view webpage for logged data when there is detected motion or abnormal temperature in the house.
 5. Client can further verify if logged data were false alarms or not by checking the images captured in (3).
 
-## Implemented Features
+## Basic Features
 
-1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity) -YH
-2. Format JSON objects from collected data -YH
-3. MQTT protocol from MQTT broker and data sensors to MQTT client -YH
-4. Storage of data logs and captured images from data sensors -YH
-5. UI for displaying logged data on localhost website -YH
-6. Enabled TLS connection -YH
-7. Enhanced messaging reliability and persistence with MQTT protocol -not done
+1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity) - YH
+2. Format JSON objects from collected data - YH
+3. MQTT protocol from MQTT broker and data sensors to MQTT client - YH
+4. Storage of data logs and captured images from data sensors - YH
+5. UI for displaying logged data on localhost website - YH
+6. Enhanced messaging reliability and persistence with MQTT protocol - YH
+- disconnected clients can still receive lost messages sent during the disconnection upon reconnecting
+7. Configured Mosquitto MQTT broker to use TLS security protocol - YH
+- provides end-to-end communications security over MQTT protocol to prevent eavesdropping, tampering and message forgery
+- requires personalized setup by users (refer to the TLS Security section)
+
+### Enhanced Messaging Reliability and Persistence
+This was set up by ensuring client had a unique client_id that can be identified by the broker as an existing subscriber.
+Client also has to disable the `clean_session` option by setting it to false and subscribe to channels with a specified `qos` level of either 1 or 2.
+Broker has to publish messages with `qos` option set to either 1 or 2.
+
+### TLS Security
+Setting up TLS protocol would require the user to make use of `openssl` to create his/her own Certificate Authority, Server keys and certificates.
+The instructions can be found in the `tls-setup` folder.
 
 ## Authors
 
@@ -95,7 +116,7 @@ node index
 * **Ng Jian Wei** - [njw95](https://github.com/njw95)
 * **Eshwar S/O Kamalapathy** - [eshwarkp](https://github.com/eshwarkp)
 
-## Acknowledgments
+## References
 
-* Hat tip to anyone whose code was used
-* Inspiration
+* [HiveMQ MQTT Blog Posts] (https://www.hivemq.com/tags/mqtt-essentials/)
+* [Mosquitto SSL Configuration - MQTT TLS Security] (http://www.steves-internet-guide.com/mosquitto-tls/)

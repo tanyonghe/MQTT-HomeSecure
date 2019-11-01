@@ -2,7 +2,8 @@
 
 ## Home Surveillance via Data Sensors using MQTT Protocol
 
-The aim of this project was to set up a home surveillance system using sensors that can send data messages to alert homeowners of suspicious activities like unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sends them an image so that they can monitor the situation remotely.
+The aim of this project was to set up a home surveillance system using sensors that can send data messages to alert homeowners of suspicious activities like 
+unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sends them an image so that they can monitor the situation remotely.
 
 ## Our Setup
 

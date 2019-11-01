@@ -8,7 +8,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/formSubmission', function (req, res) {
-  if (req.query.uname === 'admin' && req.query.psw === 'cs3103') {
+  if (req.query.uname === 'admin' && req.query.psw === 'cs3103rocks') {
     res.redirect('dashboard.html');
   } else {
     res.redirect('index.html');

@@ -51,9 +51,12 @@ def publish_dht11_data(index, humidity, temperature, image_filename, image_base6
 
 if __name__ == "__main__":
 	# Initial Setup
+	if not os.path.exists("./images"):
+		os.mkdir("./images")
+	index = 1
+    
 	GPIO.setwarnings(False)
 	GPIO.setmode(GPIO.BOARD)
-	index = 1
 	
 	# Read output from HC-SR501 Infrared PIR Motion Sensor Module
 	GPIO.setup(11, GPIO.IN)

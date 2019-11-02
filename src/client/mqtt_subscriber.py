@@ -6,9 +6,8 @@ import paho.mqtt.client as mqtt
 
  
 MQTT_SERVER = "192.168.1.30"		# MQTT Broker IP Address
-#MQTT_SERVER = "192.168.43.223"		# MQTT Broker IP Address
 MQTT_PATH = "cs3103_group2_channel"	# Channel Name
-TLS_CERT_FILEPATH = ""#"./ca.crt"		# TLS Certificate
+TLS_CERT_FILEPATH = ""      		# TLS Certificate
 DATA_FILEPATH = "./localhost/public/data/"
 DATA_FILENAME = "data_logs.txt"
 DATA_FULLPATH = os.path.join(DATA_FILEPATH, DATA_FILENAME)
@@ -70,6 +69,7 @@ def write_dht11_data(data):
 	f.close()
 	if DEBUG:
 		print("Finished writing data.")
+
  
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -99,6 +99,10 @@ def on_message(client, userdata, msg):
 
 
 if __name__ == "__main__": 
+    # Initial Setup
+    if not os.path.exists("./localhost/public/data/images"):
+        os.makedirs("./localhost/public/data/images")
+    
 	client = mqtt.Client(client_id="cs3103_group2_client", clean_session=False)
 	client.on_connect = on_connect
 	client.on_message = on_message

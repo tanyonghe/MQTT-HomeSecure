@@ -25,7 +25,7 @@ Email Address: steve@testemail.com
 3. Create server key pair that will be used by the broker.  
 `openssl genrsa -out server.key 2048`
 
-4. Create a certificate request `.csr`.
+4. Create a certificate request `.csr`.  
 `openssl req -new -out server.csr -key server.key`
 
 Example form details:
@@ -39,7 +39,7 @@ Common Name (e.g. server FQDN or YOUR name): ws4
 Email Address: steve@testemail.com
 ```
 
-5. Use the CA key to verify and sign the server certificate to create the `server.crt` file.
+5. Use the CA key to verify and sign the server certificate to create the `server.crt` file.  
 `openssl x509 -req -in server.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt -days 360`
 
 6. Check that these three files are found in the current directory:

@@ -95,16 +95,16 @@ Password: cs3103rocks
 
 ## Basic Features
 
-1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity) - YH
-2. Format JSON objects from collected data - YH
-3. MQTT protocol from MQTT broker and data sensors to MQTT client - YH
-4. Storage of data logs and captured images from data sensors - YH
-5. UI for displaying logged data on localhost website - YH
-6. Enhanced messaging reliability and persistence with MQTT protocol - YH
-- disconnected clients can still receive lost messages sent during the disconnection upon reconnecting
-7. Configured Mosquitto MQTT broker to use TLS security protocol - YH
-- provides end-to-end communications security over MQTT protocol to prevent eavesdropping, tampering and message forgery
-- requires personalized setup by users (refer to the TLS Security section)
+1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity)   
+2. Format JSON objects from collected data  
+3. MQTT protocol from MQTT broker and data sensors to MQTT client  
+4. Storage of data logs and captured images from data sensors  
+5. UI for displaying logged data on localhost website  
+6. Enhanced messaging reliability and persistence with MQTT protocol  
+   * Disconnected clients can still receive lost messages sent during the disconnection upon reconnecting
+7. Configured Mosquitto MQTT broker to use TLS security protocol  
+   * Provides end-to-end communications security over MQTT protocol to prevent eavesdropping, tampering and message forgery
+   * Requires personalized setup by users (refer to the TLS Security section)
 
 ### Enhanced Messaging Reliability and Persistence
 This was set up by ensuring client had a unique client_id that can be identified by the broker as an existing subscriber.
@@ -124,5 +124,5 @@ The instructions can be found in the `tls-setup` folder.
 
 ## References
 
-* [HiveMQ MQTT Blog Posts] (https://www.hivemq.com/tags/mqtt-essentials/)
-* [Mosquitto SSL Configuration - MQTT TLS Security] (http://www.steves-internet-guide.com/mosquitto-tls/)
+* [HiveMQ MQTT Blog Posts](https://www.hivemq.com/tags/mqtt-essentials/)
+* [Mosquitto SSL Configuration - MQTT TLS Security](http://www.steves-internet-guide.com/mosquitto-tls/)

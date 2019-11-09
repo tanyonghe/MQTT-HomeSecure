@@ -5,9 +5,23 @@
     <title>IoT Home Surveillance Dashboard</title>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="./dashboard/styles.css">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     <script src="./dashboard/script.js"></script>
+    <script> 
+        var currFileHash = 0;
+        
+        String.prototype.hashCode = function() {
+            var hash = 0, i, chr;
+            if (this.length === 0) return hash;
+            for (i = 0; i < this.length; i++) {
+                chr   = this.charCodeAt(i);
+                hash  = ((hash << 5) - hash) + chr;
+                hash |= 0; // Convert to 32bit integer
+            }
+            return hash;
+        };
+    </script>
 
 </head>
 
@@ -43,6 +57,32 @@
             </div>
         </div>
     </div>
+    
+    <script>       
+        setInterval(function(){
+            var fileName = "./data/data_logs.txt";
+            var txtFile;
+            
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            if (window.XMLHttpRequest) {
+                txtFile = new XMLHttpRequest();
+            }
+            // code for IE6, IE5
+            else {
+                txtFile = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+              
+            txtFile.open("GET",fileName,false);
+            txtFile.send();
+            
+            var txtDoc = txtFile.responseText;
+            
+            if (txtDoc.hashCode() != currFileHash) {
+                location.reload();
+            }
+            
+        }, 5000); // 5000 milliseconds means 5 seconds
+    </script>
 
     <script>
         var fileName = "./data/data_logs.txt";
@@ -63,6 +103,7 @@
         var txtDoc = txtFile.responseText;
         var lines = txtDoc.split("\r\n");
         var tableData = '';
+        currFileHash = txtDoc.hashCode();
 
         lines.forEach(function(line) {
 			if (line !== "") {

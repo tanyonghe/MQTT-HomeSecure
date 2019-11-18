@@ -54,11 +54,16 @@ server.key
 
 8. Copy `server.crt` and `server.key` into the `/etc/mosquitto/certs/` directory.
 
-9. Copy `ca.crt` into the client's directories.
+9. Copy `ca.crt` into the `src/broker` directory and `src/client` directory.
+   * The certificate allows communication with the broker on port 8883 using TLS protocol.
+   * Data Transfer Flow: Data sensors -> Broker -> Client
+   * And yes, you need the certificate even if data sensors are connected to the same physical device as the MQTT broker.
 
 10. Replace the `mosquitto.conf` file found in the broker's `/etc/mosquitto/` directory with the `mosquitto.conf` file provided in this repository's `tls-setup` directory.
 
-11. In the MQTT subscriber code, add `client.tls_set(CA_CERT_CLIENT_FILEPATH)` before calling `client.connect()`. Remember to replace CA_CERT_CLIENT_FILEPATH with the filepath location for `ca.crt` in client's directories.
+11. In the MQTT publisher code, replace TLS_CERT_FILEPATH with the filepath location for `ca.crt` in the `src/broker` directory.
+
+12. In the MQTT subscriber code, replace TLS_CERT_FILEPATH with the filepath location for `ca.crt` in the `src/cient` directory.
 
 ## Extra Things to Note
 

@@ -7,6 +7,15 @@ unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sen
 
 ## Our Setup
 
+### Planned Setup
+![Planned Setup](img/planned_setup.png)
+
+### Physical Setup
+![Physical Setup](img/planned_setup.png)
+
+### Client UI Setup
+![Client UI Setup](img/client_ui_setup.png)
+
 ### Hardware Used
 
 1. Raspberry Pi
@@ -95,17 +104,17 @@ Password: cs3103rocks
 
 ## Basic Features
 
-1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity)   
-2. Format JSON objects from collected data  
-3. MQTT protocol from MQTT broker and data sensors to MQTT client  
-4. Storage of data logs and captured images from data sensors  
-5. UI for displaying logged data on localhost website  
-6. Enhanced messaging reliability and persistence with MQTT protocol  
+1. Data collection (logs and images) from sensor modules (RPi Camera, PIR Motion, Temperature and Humidity).   
+2. Format JSON objects from collected data.  
+3. MQTT protocol from MQTT broker and data sensors to MQTT client.  
+4. Storage of data logs and captured images from data sensors.  
+5. UI for displaying logged data on localhost website.  
+6. Enhanced messaging reliability and persistence with MQTT protocol.  
    * Disconnected clients can still receive lost messages sent during the disconnection upon reconnecting
-7. Configured Mosquitto MQTT broker to use TLS security protocol  
+7. Configured Mosquitto MQTT broker to use TLS security protocol.  
    * Provides end-to-end communications security over MQTT protocol to prevent eavesdropping, tampering and message forgery
    * Requires personalized setup by users (refer to the TLS Security section)
-8. Record videos, upload onto Dropbox and send alert email notifications with the video link included.
+8. Record videos, upload onto Dropbox and send alert email notifications with the video link included.  
 
 ### Enhanced Messaging Reliability and Persistence
 This was set up by ensuring client had a unique client_id that can be identified by the broker as an existing subscriber.

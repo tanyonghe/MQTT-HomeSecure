@@ -11,7 +11,7 @@ unexpected motions (e.g. intruders) or abnormal temperatures (e.g. fire) and sen
 ![Planned Setup](img/planned_setup.png)
 
 ### Physical Setup
-![Physical Setup](img/planned_setup.png)
+![Physical Setup](img/physical_setup.png)
 
 ### Client UI Setup
 ![Client UI Setup](img/client_ui_setup.png)

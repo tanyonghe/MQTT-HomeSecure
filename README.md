@@ -47,7 +47,7 @@ GND - GPIO Pin 6
 
 ```
 sudo apt update
-sudo apt install -y mosquitto mosquitto-clients
+sudo apt install -y mosquitto
 ```
 
 2. Set up Mosquitto MQTT Broker using default configurations.
@@ -60,7 +60,7 @@ mosquitto -v
 3. Start collecting data on the MQTT Broker (i.e. the Raspberry Pi) and publishing messages to your MQTT Client Machine (e.g. desktop, laptop, etc.) by using the following command in the `src/broker` directory:
 
 ```
-python mqtt_sensors.py
+python mqtt_publisher.py
 ```
 
 4. Subscribe to MQTT Broker (i.e. the Raspberry Pi) on your MQTT Client Machine (e.g. desktop, laptop, etc.) using the following command in the `src/client` directory:
@@ -105,6 +105,7 @@ Password: cs3103rocks
 7. Configured Mosquitto MQTT broker to use TLS security protocol  
    * Provides end-to-end communications security over MQTT protocol to prevent eavesdropping, tampering and message forgery
    * Requires personalized setup by users (refer to the TLS Security section)
+8. Record videos, upload onto Dropbox and send alert email notifications with the video link included.
 
 ### Enhanced Messaging Reliability and Persistence
 This was set up by ensuring client had a unique client_id that can be identified by the broker as an existing subscriber.
@@ -114,6 +115,11 @@ Broker has to publish messages with `qos` option set to either 1 or 2.
 ### TLS Security
 Setting up TLS protocol would require the user to make use of `openssl` to create his/her own Certificate Authority, Server keys and certificates.
 The instructions can be found in the `tls-setup` folder.
+
+## Possible Further Enhancements
+1. Combination of MQTT protocol with other protocols to further improve the system. 
+For instance, RTP/RTSP can allow us to stream live videos that can enable clients to view real-time footages and provide quick responses.
+2. Deploy website for clients’ remote access over the Internet.
 
 ## Authors
 

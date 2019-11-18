@@ -1,17 +1,18 @@
 import Adafruit_DHT
-from picamera import PiCamera
 import RPi.GPIO as GPIO
 import base64
 import datetime
-import json
-import math
-import paho.mqtt.publish as publish
-import time
-import sys, os
 import dropbox
 from dropbox.exceptions import ApiError, AuthError
-import subprocess
+import json
+import math
+import os
+import paho.mqtt.publish as publish
+from picamera import PiCamera
+import time
 import smtplib
+import subprocess
+import sys
 
 
 from email.mime.multipart import MIMEMultipart
@@ -22,28 +23,26 @@ from email import encoders
 
 MQTT_SERVER = "localhost"			# MQTT Broker IP Address
 MQTT_PATH = "cs3103_group2_channel"	# Channel Name
+TLS_CERT_FILEPATH = ""      		# TLS Certificate
 DHT_SENSOR = Adafruit_DHT.DHT11
 DHT_PIN = 4
 DEBUG = True
 MOTION = False
 HIGHTEMP = False
-
-
-# Authorisation token
-TOKEN = 'P-EM0zKgaQAAAAAAAAAADqTzlfXB5mSLqZOZ0D2fp-yqt1MruWWc5aJ_pTbUiYCw'
+DROPBOX_TOKEN = 'P-EM0zKgaQAAAAAAAAAADqTzlfXB5mSLqZOZ0D2fp-yqt1MruWWc5aJ_pTbUiYCw'
 
 
 # Upload localfile to Dropbox
 def uploadFile(localfile):
 
     # Check that access tocken added
-    if (len(TOKEN) == 0):
+    if (len(DROPBOX_TOKEN) == 0):
         sys.exit("ERROR: Missing access token. "
                  "try re-generating an access token from the app console at dropbox.com.")
 
     # Create instance of a Dropbox class, which can make requests to API
     print("Creating a Dropbox object...")
-    dbx = dropbox.Dropbox(TOKEN)
+    dbx = dropbox.Dropbox(DROPBOX_TOKEN)
 
     # Check that the access token is valid
     try:
@@ -72,6 +71,7 @@ def uploadFile(localfile):
                 print(err)
                 sys.exit()
 
+# Should securely store credentials but not our project focus
 sender = 'cs3103test@gmail.com'
 password = 'Password@123'
 receiver = 'cs3103test2@gmail.com'
@@ -135,7 +135,11 @@ def publish_pir_data(index, image_filename, image_base64):
 	data = {"topic": "pir", "index": index, "location": "Living Room", "datetime": datetime.datetime.today().strftime('%Y-%m-%d %H:%M:%S'), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
-	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
+
+    if TLS_CERT_FILEPATH:
+        publish.single(MQTT_PATH, data_out, tls={'ca_certs':TLS_CERT_FILEPATH}, port=8883, hostname=MQTT_SERVER, qos=1)
+    else:
+        publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
 
 
 def publish_dht11_data(index, humidity, temperature, image_filename, image_base64):
@@ -143,7 +147,11 @@ def publish_dht11_data(index, humidity, temperature, image_filename, image_base6
 		"humidity": "{0:0.1f}%".format(humidity), "temperature": "{1:0.1f}C".format(temperature), 
 		"image_filename": image_filename, "image_base64": image_base64}
 	data_out = json.dumps(data)
-	publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
+
+    if TLS_CERT_FILEPATH:
+        publish.single(MQTT_PATH, data_out, tls={'ca_certs':TLS_CERT_FILEPATH}, port=8883, hostname=MQTT_SERVER, qos=1)
+    else:
+        publish.single(MQTT_PATH, data_out, hostname=MQTT_SERVER, qos=1)
 		
 
 if __name__ == "__main__":
